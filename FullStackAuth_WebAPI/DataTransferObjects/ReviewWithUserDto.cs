@@ -1,4 +1,6 @@
-﻿namespace FullStackAuth_WebAPI.DataTransferObjects
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FullStackAuth_WebAPI.DataTransferObjects
 {
     public class ReviewWithUserDto
     {
