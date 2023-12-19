@@ -1,8 +1,4 @@
-﻿using FullStackAuth_WebAPI.Models;
-using System.Collections.Generic;
-
-
-namespace FullStackAuth_WebAPI.DataTransferObjects
+﻿namespace FullStackAuth_WebAPI.DataTransferObjects
 {
     public class BookDetailsDto
     {

@@ -39,6 +39,17 @@ namespace FullStackAuth_WebAPI.Controllers
                 data.UserId = userId;
 
                 _context.Reviews.Add(data);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                _context.SaveChanges();
+
+                return StatusCode(201, data);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
         }
     }
