@@ -20,36 +20,63 @@ namespace FullStackAuth_WebAPI.Controllers
 
         // GET: api/<BookDetailsController>
         [HttpGet("{bookId}")]
-        public IActionResult Get(string bookId)
+        public IActionResult GetReviewsByBookId(string bookId)
         {
-            var review = _context.Reviews.Include(r => r.Id).FirstOrDefault(r => r.BookId == bookId);
-            if (review == null)
+            try
             {
-                return NotFound();
-            }
-            var bookDetailsDto = new BookDetailsDto
-            {
-                Reviews = new List<ReviewWithUserDto>
-                { 
-                    new ReviewWithUserDto 
+
+                var reviews = _context.Reviews.Select(r => new BookDetailsDto
+                {
+                    Reviews = new List<ReviewWithUserDto>
+                {
+                    new ReviewWithUserDto
                     {
-                        Id = review.Id,
-                        BookId = review.BookId,
-                        Text = review.Text,
-                        Rating = review.Rating,
+                        Id = r.Id,
+                        BookId = r.BookId,
+                        Text = r.Text,
+                        Rating = r.Rating,
                         User = new UserForDisplayDto
                         {
-                            Id = "h",
-                            FirstName = "h",
-                            LastName = "j",
-                            UserName = "k"
+                            Id = r.User.Id,
+                            FirstName = r.User.FirstName,
+                            LastName = r.User.LastName,
+                            UserName = r.User.UserName,
                         }
-                    } 
+                    }
                 },
-                AverageRating = 0,
-                IsFavorited = false,
-            };
-            return StatusCode(200, bookDetailsDto);
+                    AverageRating = 0,
+                    IsFavorited = false,
+                }).ToList();
+
+                //var bookDetailsDto = new BookDetailsDto
+                //{
+                //    Reviews = new List<ReviewWithUserDto>
+                //    { 
+                //        new ReviewWithUserDto 
+                //        {
+                //            Id = 0,
+                //            BookId = "kkll",
+                //            Text = "hsui",
+                //            Rating = 0,
+                //            User = new UserForDisplayDto
+                //            {
+                //                Id = "h",
+                //                FirstName = "h",
+                //                LastName = "j",
+                //                UserName = "k"
+                //            }
+                //        } 
+                //    },
+                //    AverageRating = 0,
+                //    IsFavorited = false,
+                //};
+                return StatusCode(200, reviews);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
         }
     }
+    
 }
