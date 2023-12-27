@@ -24,52 +24,29 @@ namespace FullStackAuth_WebAPI.Controllers
         {
             try
             {
-
                 var reviews = _context.Reviews.Select(r => new BookDetailsDto
                 {
                     Reviews = new List<ReviewWithUserDto>
-                {
-                    new ReviewWithUserDto
                     {
-                        Id = r.Id,
-                        BookId = r.BookId,
-                        Text = r.Text,
-                        Rating = r.Rating,
-                        User = new UserForDisplayDto
+                        new ReviewWithUserDto
                         {
-                            Id = r.User.Id,
-                            FirstName = r.User.FirstName,
-                            LastName = r.User.LastName,
-                            UserName = r.User.UserName,
+                            Id = r.Id,
+                            BookId = r.BookId,
+                            Text = r.Text,
+                            Rating = r.Rating,
+                            User = new UserForDisplayDto
+                            {
+                                Id = r.User.Id,
+                                FirstName = r.User.FirstName,
+                                LastName = r.User.LastName,
+                                UserName = r.User.UserName,
+                            }
                         }
-                    }
-                },
+                    },
                     AverageRating = 0,
                     IsFavorited = false,
                 }).ToList();
 
-                //var bookDetailsDto = new BookDetailsDto
-                //{
-                //    Reviews = new List<ReviewWithUserDto>
-                //    { 
-                //        new ReviewWithUserDto 
-                //        {
-                //            Id = 0,
-                //            BookId = "kkll",
-                //            Text = "hsui",
-                //            Rating = 0,
-                //            User = new UserForDisplayDto
-                //            {
-                //                Id = "h",
-                //                FirstName = "h",
-                //                LastName = "j",
-                //                UserName = "k"
-                //            }
-                //        } 
-                //    },
-                //    AverageRating = 0,
-                //    IsFavorited = false,
-                //};
                 return StatusCode(200, reviews);
             }
             catch (Exception ex)
