@@ -20,39 +20,35 @@ namespace FullStackAuth_WebAPI.Controllers
 
         // GET: api/<BookDetailsController>
         [HttpGet("{bookId}")]
-        public IActionResult GetReviewsByBookId(string bookId)
+        public IActionResult GetBookDetails(string bookId)
         {
-            try
+            var reviews = _context.Reviews.Where(r => r.BookId == bookId).Select(r => new ReviewWithUserDto
             {
-                var reviews = _context.Reviews.Select(r => new BookDetailsDto
+                Id = r.Id,
+                BookId = r.BookId,
+                Text = r.Text,
+                Rating = r.Rating,
+                User = new UserForDisplayDto
                 {
-                    Reviews = new List<ReviewWithUserDto>
-                    {
-                        new ReviewWithUserDto
-                        {
-                            Id = r.Id,
-                            BookId = r.BookId,
-                            Text = r.Text,
-                            Rating = r.Rating,
-                            User = new UserForDisplayDto
-                            {
-                                Id = r.User.Id,
-                                FirstName = r.User.FirstName,
-                                LastName = r.User.LastName,
-                                UserName = r.User.UserName,
-                            }
-                        }
-                    },
-                    AverageRating = 0,
-                    IsFavorited = false,
-                }).ToList();
+                    Id = r.User.Id,
+                    FirstName = r.User.FirstName,
+                    LastName = r.User.LastName,
+                    UserName = r.User.UserName,
+                }
+            }).ToList();
 
-                return StatusCode(200, reviews);
-            }
-            catch (Exception ex)
+            var averageRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
+
+            var isFavorited = _context.Favorites.Any(f => f.BookId == bookId);
+
+            var bookDetailsDto = new BookDetailsDto
             {
-                return StatusCode(500, ex);
-            }
+                Reviews = reviews,
+                AverageRating = averageRating,
+                IsFavorited = isFavorited,
+            };
+
+            return StatusCode(200, bookDetailsDto);
         }
     }
     
