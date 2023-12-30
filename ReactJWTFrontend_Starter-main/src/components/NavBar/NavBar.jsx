@@ -12,7 +12,12 @@ const Navbar = () => {
       <ul>
         <li className="brand">
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-            <b>Welcome to BookNook!</b>
+            <b>BookNook</b>
+          </Link>
+        </li>
+        <li>
+          <Link to="/search" style={{ color: "white" }}>
+            <b>Search For Books</b>
           </Link>
         </li>
         <li>
