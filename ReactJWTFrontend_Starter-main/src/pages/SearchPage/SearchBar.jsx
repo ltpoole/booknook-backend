@@ -1,10 +1,14 @@
-const SearchBar = () => {
+const SearchBar = ({ searchTerm, setSearchTerm, handleSearch }) => {
   return (
-    <form action="">
-      <div>
-        <input type="text" placeholder="Search" />
-      </div>
-    </form>
+    <div>
+      <input
+        type="text"
+        placeholder="Search for book..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
+    </div>
   );
 };
 
