@@ -12,7 +12,12 @@ const Navbar = () => {
       <ul>
         <li className="brand">
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-            <b>React/ASP.NET JWT Starter</b>
+            <b>BookNook</b>
+          </Link>
+        </li>
+        <li>
+          <Link to="/search" style={{ color: "white" }}>
+            <p>Search Books</p>
           </Link>
         </li>
         <li>
