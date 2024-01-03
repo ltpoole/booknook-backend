@@ -1,5 +1,5 @@
 // General Imports
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
 // Pages Imports
@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import SearchPage from "./pages/SearchPage/SearchPage";
+import BookDetailsPage from "./pages/BookDetailsPage/BookDetailsPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -38,6 +39,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/book/:bookId/" element={<BookDetailsPage />} />
       </Routes>
       <Footer />
     </div>

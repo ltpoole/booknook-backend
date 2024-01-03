@@ -13,9 +13,9 @@ const SearchPage = () => {
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`
       );
-      setResults(response.data.items);
+      setResults(response.data);
     } catch (error) {
-      console.warn(error);
+      console.log(error);
     }
   };
 
@@ -26,6 +26,7 @@ const SearchPage = () => {
         setSearchTerm={setSearchTerm}
         handleSearch={handleSearch}
       />
+      {}
       <ResultsList results={results} />
     </div>
   );

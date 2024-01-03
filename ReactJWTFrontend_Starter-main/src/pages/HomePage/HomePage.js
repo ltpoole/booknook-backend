@@ -8,20 +8,23 @@ const HomePage = () => {
   // The "user" value from this Hook contains user information (id, userName, email) from the decoded token
   // The "token" value is the JWT token sent from the backend that you will send back in the header of any request requiring authentication
   const [user, token] = useAuth();
-  const [cars, setCars] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    fetchCars();
+    fetchFavorites();
   }, [token]);
 
-  const fetchCars = async () => {
+  const fetchFavorites = async () => {
     try {
-      let response = await axios.get("https://localhost:5001/api/cars/myCars", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      setCars(response.data);
+      let response = await axios.get(
+        "https://localhost:5001/api/Favorites/myFavorites",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setFavorites(response.data);
     } catch (error) {
       console.log(error.response.data);
     }
@@ -30,11 +33,11 @@ const HomePage = () => {
   return (
     <div className="container">
       {console.log(user)}
-      <h1>Home Page for {user.userName}!</h1>
-      {cars &&
-        cars.map((car) => (
-          <p key={car.id}>
-            {car.year} {car.model} {car.make}
+      <h1>{user.userName}'s Bookshelf</h1>
+      {favorites &&
+        favorites.map((favorite) => (
+          <p key={favorite.bookid}>
+            {favorite.title} {favorite.thumbnail}
           </p>
         ))}
     </div>
