@@ -26,8 +26,7 @@ const SearchPage = () => {
         setSearchTerm={setSearchTerm}
         handleSearch={handleSearch}
       />
-      {}
-      <ResultsList results={results} />
+      {results.items && <ResultsList results={results.items} />}
     </div>
   );
 };
