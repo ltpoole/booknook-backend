@@ -4,12 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import Book from "./Book";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
+import useAuth from "../../hooks/useAuth";
 
 const BookDetailsPage = () => {
   const { bookId } = useParams();
   const [book, setBook] = useState(null);
-  const [reviews, setReviews] = useState([]);
-  console.log(book);
+  const [bookDetails, setbookDetails] = useState([]);
+  const [user, token] = useAuth();
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -23,14 +24,29 @@ const BookDetailsPage = () => {
       }
     };
     fetchBook();
+    getBookDetails();
   }, [bookId]);
+
+  const getBookDetails = async () => {
+    try {
+      let response = await axios.get(
+        `https://localhost:5001/api/bookdetails/${bookId}`,
+        { headers: { Authorization: "Bearer " + token } }
+      );
+      setbookDetails(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
       {book && (
         <div>
           <Book book={book} />
-          <ReviewList reviews={reviews} />
+          {bookDetails.reviews.length != 0 && (
+            <ReviewList reviews={bookDetails.reviews} />
+          )}
           <ReviewForm bookId={bookId} />
         </div>
       )}
